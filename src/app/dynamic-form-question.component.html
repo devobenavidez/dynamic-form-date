@@ -1,0 +1,30 @@
+<div [formGroup]="form">
+
+  <div [ngSwitch]="question.controlType">
+    <span *ngSwitchCase="'textbox'">
+    <mat-form-field *ngIf="question.type=='email'" class="example-full-width">
+      <input matInput [min]="minDate1" [matDatepicker]="dp" readonly
+        (dateChange)="cambio($event, 'padre', question.nombreHijo)" [placeholder]="question.label"
+        [formControlName]="question.key">
+      <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+      <mat-datepicker #dp></mat-datepicker>
+    </mat-form-field>
+    </span>
+
+    <span *ngSwitchCase="'textbox'">
+      <mat-form-field *ngIf="question.type=='text'">
+        <input matInput [min]="minDate2" [matDatepicker]="dp" readonly
+          (dateChange)="cambio($event, 'padre', question.nombreHijo)" [placeholder]="question.label"
+          [formControlName]="question.key">
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp></mat-datepicker>
+      </mat-form-field>
+    </span>
+    <select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key">
+      <option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</option>
+    </select>
+
+  </div>
+
+  <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div>
+</div>
